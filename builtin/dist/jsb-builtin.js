@@ -2138,32 +2138,6 @@ XMLHttpRequest.prototype.removeEventListener = function (eventName, listener, op
     this['on' + eventName] = null;
 };
 
-Object.defineProperty(XMLHttpRequest.prototype, "responseXML", {
-    get:function() {
-        var txt = this.__responseXML;
-        var mime = this.__mimeType;
-        if(!txt ||
-            !document.implementation ||
-            !document.implementation.createHTMLDocument ||
-            !document.implementation.createDocument
-        ){
-            return null;
-        }
-        if(mime.indexOf("xml")){
-            var parser = new DOMParser();
-            var xml = parser.parseFromString(txt, "text/xml");
-            return xml;
-        }else{
-            var doc = document.implementation.createHTMLDocument();
-            doc.open();
-            doc.write(txt);
-            doc.close();
-            return doc;
-        }
-    },
-    enumerable: true
-})
-
 // SocketIO
 if (window.SocketIO) {
     window.io = window.SocketIO;
